@@ -34,8 +34,12 @@ $(function(){
             $(this).next('.replyForm').remove();
             $(this).remove();
         })
-    })
+    });
 
-    console.log(auth);
-    console.log(csrf_token);
-})
+    setTimeout(function(){
+        $('.flashMessage').slideUp(function(){
+            $(this).remove();
+        });
+    }, 5000);
+
+});

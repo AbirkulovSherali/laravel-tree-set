@@ -2,65 +2,64 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+        <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <title>Tree</title>
     </head>
     <body>
-        <div id="wrapper">
+        <div id="app">
             <div class="container">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
-                    <div class="nav-left">
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <a class="navbar-brand" href="javascript:avoid(0)" style="color: #3D8EB9">
-                                <i class="fa fa-database" aria-hidden="true"></i>
-                            </a>
-                            <ul class="navbar-nav">
-                                <li class="nav-item {{ (isset($link) && $link == 'home') ? 'active' : '' }}">
-                                    <a class="nav-link" href="/">Home</a>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a class="navbar-brand" href="javascript:void(0)" style="color: #3D8EB9">
+                        <i class="fa fa-database" aria-hidden="true"></i>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                        <ul class="navbar-nav nav-left">
+                            <li class="nav-item {{ (isset($link) && $link == 'home') ? 'active' : '' }}">
+                                <a class="nav-link" href="/"><span class="fa fa-home"></span> Home</a>
+                            </li>
+                            <li class="nav-item {{ (isset($link) && $link == 'categories') ? 'active' : '' }}">
+                                <a class="nav-link" href="/categories"><span class="fa fa-navicon"></span> Categories</a>
+                            </li>
+                            <li class="nav-item {{ (isset($link) && $link == 'posts') ? 'active' : '' }}">
+                                <a class="nav-link" href="/posts"><span class="fa fa-edit"></span> Posts</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav nav-right">
+                            @if(Auth::check())
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/logout"><span class="fa fa-user"></span> Logout ({{ Auth::user()->name }})</a>
                                 </li>
-                                <li class="nav-item {{ (isset($link) && $link == 'categories') ? 'active' : '' }}">
-                                    <a class="nav-link" href="/categories">Categories</a>
+                                <li class="nav-item {{ (isset($link) && $link == 'chat') ? 'active' : '' }}">
+                                    <a class="nav-link" href="/chat"><span class="fa fa-wechat"></span> Чат</a>
                                 </li>
-                                <li class="nav-item {{ (isset($link) && $link == 'posts') ? 'active' : '' }}">
-                                    <a class="nav-link" href="/posts">Posts</a>
+                            @else
+                                <li class="nav-item {{ (isset($link) && $link == 'login') ? 'active' : '' }}">
+                                    <a class="nav-link" href="/login"><span class="fa fa-user"></span> Login</a>
                                 </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="nav-right">
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav">
-                                @if(Auth::check())
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/logout">Logout ({{ Auth::user()->name }})</a>
-                                    </li>
-                                @else
-                                    <li class="nav-item {{ (isset($link) && $link == 'login') ? 'active' : '' }}">
-                                        <a class="nav-link" href="/login">Login</a>
-                                    </li>
-                                    <li class="nav-item {{ (isset($link) && $link == 'register') ? 'active' : '' }}">
-                                        <a class="nav-link" href="/registration">Registration</a>
-                                    </li>
-                                @endif
-
-                            </ul>
-                        </div>
+                                <li class="nav-item {{ (isset($link) && $link == 'register') ? 'active' : '' }}">
+                                    <a class="nav-link" href="/registration"><span class="fa fa-id-card"></span> Registration</a>
+                                </li>
+                            @endif
+                        </ul>
                     </div>
                 </nav>
             </div>
-            <div id="content" style="margin-top: 20px">
+            <div style="margin-top: 20px">
                 @yield('content')
             </div>
         </div>
 
-        <script src="{{ asset('js/jquery.js') }}"></script>
-        <script src="{{ asset('js/main.js') }}"></script>
         <script type="text/javascript">
-            // # Transfer variables from PHP to JavaScript
+            // Transfer variables from PHP to JavaScript
             window.csrf_token = '{{ csrf_token() }}' || null;
             window.auth = JSON.parse('{!! json_encode(Auth::user()) !!}') || {};
         </script>
+        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

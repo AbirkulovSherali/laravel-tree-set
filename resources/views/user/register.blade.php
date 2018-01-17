@@ -33,7 +33,7 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="password_confirmation"><b>Password:</b></label>
+                        <label for="password_confirmation"><b>Password Confirmation:</b></label>
                         <input id="password_confirmation" class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}" type="password" name="password_confirmation">
                         @if($errors->has('password_confirmation'))
                             <div class="invalid-feedback">

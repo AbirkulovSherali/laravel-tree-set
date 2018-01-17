@@ -1,9 +1,10 @@
-
-// Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
-// Variables
-@import "variables";
-
 // Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import "~bootstrap/dist/css/bootstrap";
+
+#wrapper .navbar {
+    background: #F2F2F2 !important;
+}
+
+.activeLink {
+    font-weight: bold;
+}

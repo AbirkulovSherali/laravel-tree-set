@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => 'web'], function(){
+Route::group(['middleware' => ['web']], function(){
 
     Route::get('/', function(){
         View::share('link', 'home');
@@ -19,6 +19,7 @@ Route::group(['middleware' => 'web'], function(){
     });
 
     Route::get('/categories', 'CategoriesController@list');
+    Route::get('/categories/{id}', 'CategoriesController@list');
     Route::post('/categories/create', 'CategoriesController@create');
     Route::get('/category/{id}', 'CategoriesController@view');
 
@@ -27,6 +28,11 @@ Route::group(['middleware' => 'web'], function(){
 
     Route::match(['get', 'post'], '/login', 'UserController@login');
     Route::match(['get', 'post'], '/registration', 'UserController@registration');
-    Route::get('/logout', 'UserController@logout')->name('logout');
+    Route::get('/logout', 'UserController@logout');
+
+    Route::get('/chat', 'ChatController@list');
+    Route::get('/chat/chat-with/{id}', 'ChatController@chatWith');
+    Route::post('/chat/send-message', 'ChatController@sendMessage');
+    Route::get('/chat/get-messages/{from}/{to}', 'ChatController@getMessages');
 
 });

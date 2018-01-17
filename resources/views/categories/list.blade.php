@@ -28,7 +28,7 @@
             <div class="col-md-6">
                 <h1>All Categories</h1>
                 <ul class="root">
-                    {{ HTMListTree($treeCategories) }}
+                    {{ HTMListTree($treeCategories, '', $activeCatId) }}
                 </ul>
             </div>
         </div>

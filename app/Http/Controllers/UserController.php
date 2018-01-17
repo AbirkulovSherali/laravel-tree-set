@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function __construct(Request $request){
 
+    public function __construct(){
+        $this->middleware('throttle')->only('login');
+        $this->middleware('IfLoggedIn')->except('logout');
     }
 
     public function login(Request $request){
@@ -31,10 +33,13 @@ class UserController extends Controller
                 'password' => $request->password,
             ], $remember)){
                 return redirect('/');
+            } else {
+                $request->session()->flash('flashMessage', 'Incorrect email address or password!');
+                return redirect('/login')->withInput(
+                    $request->except('password')
+                );
             }
         }
-
-        if(Auth::check()) return back();
 
         return view('user/login');
     }
@@ -64,9 +69,7 @@ class UserController extends Controller
             Auth::loginUsingId($lastInsertId);
 
             return redirect('/');
-        }
-
-        if(Auth::check()) return back();
+        };
 
         return view('user/register');
     }
@@ -75,4 +78,5 @@ class UserController extends Controller
         Auth::logout();
         return back();
     }
+
 }

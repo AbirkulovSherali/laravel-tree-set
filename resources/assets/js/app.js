@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+require('./main.js');
 
 window.Vue = require('vue');
 
@@ -16,6 +17,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('chat', require('./components/ChatComponent.vue'));
 
 const app = new Vue({
     el: '#app'

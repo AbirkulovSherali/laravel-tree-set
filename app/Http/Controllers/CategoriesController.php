@@ -18,6 +18,7 @@ class CategoriesController extends Controller
         $tree = Categories::withDepth()->get()->toTree()->toArray();
 
         return view('categories/list', [
+            'activeCatId' => request()->id ? request()->id : '',
             'categories' => $cats,
             'treeCategories' => $tree
         ]);

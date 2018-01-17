@@ -6,16 +6,22 @@
         echo '</pre>';
     }
 
-    function HTMListTree($tree, $prefix = '-') {
+    function HTMListTree($tree, $prefix = '-', $activeCatId) {
         foreach ($tree as $category) {
             if(!empty($category['children'])){
-                echo '<li><a href="/category/'.$category['id'].'">'.$category['name'].'</a>';
+                if($activeCatId == $category['id'])
+                    echo '<li><a class="activeLink" href="/categories/'.$category['id'].'">'.$category['name'].'</a>';
+                else
+                    echo '<li><a href="/categories/'.$category['id'].'">'.$category['name'].'</a>';
             } else {
-                echo '<li class="child"><a href="/category/'.$category['id'].'">'.$category['name'].'</a></li>';
+                if($activeCatId == $category['id'])
+                    echo '<li><a class="activeLink" href="/categories/'.$category['id'].'">'.$category['name'].'</a></li>';
+                else
+                    echo '<li><a href="/categories/'.$category['id'].'">'.$category['name'].'</a></li>';
             }
             if(!empty($category['children'])){
                 echo '<ul class="parent">';
-                HTMListTree($category['children'], $prefix.'-');
+                HTMListTree($category['children'], $prefix.'-', $activeCatId);
                 echo '</ul></li>';
             }
         }
@@ -29,7 +35,6 @@
     }
 
     function commentRender($tree, $checkAuth){
-        $display = $checkAuth ? 'inline' : 'none';
         foreach($tree as $comment){
             $marginLeft = 25 * $comment['depth'];
             if(!empty($comment->parent['user'])) {
