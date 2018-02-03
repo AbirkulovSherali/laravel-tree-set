@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;

@@ -54,9 +54,8 @@
                 @yield('content')
             </div>
         </div>
-
         <script type="text/javascript">
-            // Transfer variables from PHP to JavaScript
+            /* Перенос необходимых переменных из PHP в JavaScript */
             window.csrf_token = '{{ csrf_token() }}' || null;
             window.auth = JSON.parse('{!! json_encode(Auth::user()) !!}') || {};
         </script>

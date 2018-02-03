@@ -3,6 +3,7 @@ $(function(){
     $(".comment .reply").on('click', function(){
         let cardBody = $(this).parent('.card-body');
         let commentId = cardBody.attr('commentId');
+        let postId = parseInt($("#view").attr("postId"));
 
         if(!$(this).siblings('.replyForm').length){
             cardBody.append(`
@@ -11,7 +12,7 @@ $(function(){
                         <label for="text"><b>Text:</b></label>
                         <textarea required id="text" class="form-control" name="reply[text]" rows="10"></textarea>
                         <input type='hidden' name='reply[parent_id]' value='${commentId}'>
-                        <input type='hidden' name='reply[post_id]' value='${post_id}'>
+                        <input type='hidden' name='reply[post_id]' value='${postId}'>
                         <input type='hidden' name='reply[user_id]' value='${auth.id}'>
                         <input type='hidden' name='_token' value='${csrf_token}'>
                     </div>
@@ -36,6 +37,7 @@ $(function(){
         })
     });
 
+    /* Удаление flush-уведомлений */
     setTimeout(function(){
         $('.flashMessage').slideUp(function(){
             $(this).remove();

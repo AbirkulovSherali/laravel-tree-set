@@ -45,11 +45,11 @@ class ChatController extends Controller
                 'from_user_id' => $request->from_user_id,
                 'to_user_id' => $request->to_user_id,
                 'text' => $request->text,
-                'created_at' => date('d.m.Y H:i:s', time())
+                'created_at' => $request->created_at
             ]);
 
             broadcast(new SendMessage($message))->toOthers();
-            return 'Axios has sent post-request successufully!';
+            return '__SUCCESS__';
         }
     }
 

@@ -11,7 +11,6 @@ class UserController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('throttle')->only('login');
         $this->middleware('IfLoggedIn')->except('logout');
     }
 
@@ -76,7 +75,7 @@ class UserController extends Controller
 
     public function logout(){
         Auth::logout();
-        return back();
+        return redirect('/');
     }
 
 }

@@ -3,6 +3,7 @@
         <div class="messages">
             <template v-for="message in messages">
                 <p class="message">
+                    <!-- <p class="data">{{ moment(Number(message.created_at)).fromNow() }}</p> -->
                     <span class="badge badge-success" v-if="message.from_user_id == auth.id">You</span>
                     <span class="badge badge-primary" v-else>{{ toUserName }}</span>
                     {{ message.text }}
@@ -26,7 +27,8 @@
             return {
                 message: '',
                 messages: [],
-                auth: auth
+                auth: auth,
+                moment: moment
             }
         },
 
@@ -41,23 +43,29 @@
 
         mounted: function(){
             Echo.channel(`chat.${auth.id}`)
-            .listen('SendMessage', (data) => {
-                console.log(data);
-                this.messages.push(data.message)
-            });
+                .listen('SendMessage', (data) => {
+                    console.log(data);
+                    console.log(data.message.from_user_id, data.message.to_user_id, this.toUserId);
+                    if(data.message.from_user_id == this.toUserId){
+                        this.messages.push(data.message);
+                    }
+                });
 
             axios.get('/chat/get-messages/' + auth.id + '/' + this.toUserId)
                 .then((response) => {
                     this.messages = response.data;
-                })
+                });
+
+                console.log(moment(new Date().getTime()).fromNow());
         },
 
         methods: {
             sendMessage: function(){
                 let message = {
+                    'from_user_id': Number(auth.id),
                     'to_user_id': Number(this.toUserId),
-                    'from_user_id': Number(this.fromUserId),
                     'text': this.message,
+                    'created_at': new Date().getTime()
                 };
 
                 this.message = '';

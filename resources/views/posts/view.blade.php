@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-sm-12" style="margin-bottom: 20px">
                 <h2>{{ $post['title'] }}</h2>
-                <div id="view">
+                <div id="view" postId="{{ $post['id'] }}">
                     {{ $post['text'] }}
                 </div>
             </div>
@@ -50,9 +50,4 @@
 
         </div>
     </div>
-
-    <script type="text/javascript">
-        // # Transfer variables from PHP to JavaScript
-        window.post_id = '{{ $post['id'] }}';
-    </script>
 @endsection
